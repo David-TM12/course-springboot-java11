@@ -32,7 +32,7 @@ public class Order implements Serializable {
 	private Set<OrderItem> items = new HashSet<>();
 
 	@OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
-	private Payment paymet;
+	private Payment payment;
 
 	public Order() {
 
@@ -81,16 +81,24 @@ public class Order implements Serializable {
 		}
 	}
 
-	public Payment getPaymet() {
-		return paymet;
+	public Payment getPayment() {
+		return payment;
 	}
 
-	public void setPaymet(Payment paymet) {
-		this.paymet = paymet;
+	public void setPayment(Payment payment) {
+		this.payment = payment;
 	}
 
 	public Set<OrderItem> getItems(){
 		return items;
+	}
+
+	public Double getTotal(){
+		double sum = 0.0;
+		for(OrderItem x : items){
+			sum += x.getSubTotal();
+		}
+		return sum;
 	}
 
 	@Override
